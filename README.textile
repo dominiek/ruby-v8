@@ -1,0 +1,41 @@
+
+h1. V8 for Ruby
+
+Run the V8 Javascript Engine from Ruby. V8 is Google's powerful JS engine that's used by Google Chrome. Using this C++ Ruby extension, you can run JS from Ruby land.
+
+_Note: this project just started, there is a lot to be done. There is no way that this code is production ready yet._
+
+h2. Install
+
+<pre><code>
+  # Download and build V8: http://code.google.com/apis/v8/build.html
+  # Change to your ruby-v8 directory.
+  # Need Ruby RICE to pimp up C++ compatibility:
+  sudo gem install rice
+  # Compile the V8 ruby module:
+  ruby extconf.rb --with-v8-dir=$V8_BUILD_PATH
+</code></pre>
+
+h2. Example: Hello World
+
+<pre><code>
+  require 'V8'
+
+  js_code = <<-JAVASCRIPT
+
+    var hello = 'hello';
+    var world = 'world';
+    hello + ' ' + world + '!';
+
+  JAVASCRIPT
+
+  proc = V8::Proc.new(js_code)
+  result = proc.run
+  puts result
+</code></pre>
+
+h2. TODO
+
+* Proper exception handling
+* Memory benchmarking, making sure things are garbage collected
+* Ruby function and object callbacks
